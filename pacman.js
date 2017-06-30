@@ -100,7 +100,6 @@ function ghostMove() {
 
 function start_game() {
     placeGhost();
-    placeGhost();
     displayWorld();
     displayPacman();
     //handle initial position of pacman
@@ -128,7 +127,11 @@ function won_lost() {
 }
 function end_game() {
     document.onkeydown = function (e) {
-        e.preventDefault();
+        if (e.keyCode == 13) {
+            restart();
+        } else {
+            e.preventDefault();
+        }
     }
     clearInterval(ghost_Movement);
     document.getElementById("restart").style.display = "block";
@@ -174,7 +177,7 @@ function move() {
     }
 }
 
-document.getElementById("restart").onclick = function () {
+function restart() {
     pacman.x = 1;
     pacman.y = 1;
     ghost.x = rand_num();
@@ -187,6 +190,10 @@ document.getElementById("restart").onclick = function () {
     document.getElementById("win_lose").innerHTML = "Playing..";
     world = JSON.parse(JSON.stringify(original));
     start_game();
+}
+
+document.getElementById("restart").onclick = function () {
+    restart();
 }
 
 start_game();
